@@ -13,31 +13,11 @@ app.use(cors());
 app.use(json());
 
 let todos = [
-	{
-		id: nanoid(),
-		title: 'todo 1',
-		completed: true,
-	},
-	{
-		id: nanoid(),
-		title: 'todo 2',
-		completed: false,
-	},
-	{
-		id: nanoid(),
-		title: 'todo 3',
-		completed: false,
-	},
-	{
-		id: nanoid(),
-		title: 'todo 4',
-		completed: false,
-	},
-	{
-		id: nanoid(),
-		title: 'todo 5',
-		completed: false,
-	},
+	{ id: nanoid(), title: 'dormir antes das 22h', completed: false },
+	{ id: nanoid(), title: 'alimentar cão', completed: true },
+	{ id: nanoid(), title: 'passear cão', completed: true },
+	{ id: nanoid(), title: 'estudar', completed: true },
+	{ id: nanoid(), title: 'fazer desafio de código', completed: false },
 ];
 
 app.get('/todos', (req, res) => res.send(todos));
