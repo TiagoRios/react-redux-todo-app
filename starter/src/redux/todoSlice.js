@@ -9,6 +9,7 @@ const myThunkGetTodos = async () => {
 
         if (res.ok) {
             const todos = await res.json();
+            // Este objeto esta dentro de action.payload.todos
             return { todos } // Objeto contendo os "TODOS"
         }
 
@@ -32,6 +33,31 @@ const myThunkAddTodo = async (myPayload) => {
 
         if (res.ok) {
             const todo = await res.json();
+            // Este objeto esta dentro de action.payload.todo
+            return { todo } // Objeto contendo apenas um "TODO"
+        }
+
+    } catch (error) {
+        console.error(`\n\nERROR: ${error.message}\n\n`);
+    }
+}
+
+const myThunkToggleCompleteAsync = async (outroPayload) => {
+    const URL = `http://localhost:7000/todos/${outroPayload.id}`;
+
+    try {
+        const res = await fetch(URL,
+            {
+                method: "PATCH",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ completed: outroPayload.completed })
+            })
+
+        if (res.ok) {
+            const todo = await res.json();
+            // Este objeto esta dentro de action.payload.todo
             return { todo } // Objeto contendo apenas um "TODO"
         }
 
@@ -49,6 +75,11 @@ export const getTodosAsync = createAsyncThunk(
 export const addTodoAsync = createAsyncThunk(
     'todos/addTodoAsync',
     myThunkAddTodo
+)
+
+export const toggleCompleteAsync = createAsyncThunk(
+    'todos/toggleCompleteAsync',
+    myThunkToggleCompleteAsync
 )
 
 export const todoSlice = createSlice({
@@ -71,10 +102,12 @@ export const todoSlice = createSlice({
             };
             state.push(todo)
         },
+
         toggleComplete: (state, action) => {
             const index = state.findIndex((todo) => todo.id === action.payload.id);
             state[index].completed = action.payload.completed;
         },
+
         deleteTodo: (state, action) => {
             return state.filter(todo => todo.id !== action.payload.id)
         }
@@ -87,7 +120,12 @@ export const todoSlice = createSlice({
         },
 
         [addTodoAsync.fulfilled]: (state, action) => {
-            state.push(action.payload.todo)
+            state.push(action.payload.todo);
+        },
+
+        [toggleCompleteAsync.fulfilled]: (state, action) => {
+            const index = state.findIndex((todo) => todo.id === action.payload.todo.id);
+            state[index].completed = action.payload.todo.completed;
         },
     },
 });
