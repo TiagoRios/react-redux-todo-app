@@ -5,7 +5,7 @@ import { toggleComplete, deleteTodo } from '../redux/todoSlice';
 const TodoItem = ({ id, title, completed }) => {
 	const dispatch = useDispatch();
 
-	const handleChecboxClick = () => {
+	const handleChecboxChange = () => {
 		// id e completed são passadas pelo payload.
 		dispatch(toggleComplete({ id, completed: !completed }))
 	}
@@ -22,7 +22,7 @@ const TodoItem = ({ id, title, completed }) => {
 					<input
 						type='checkbox'
 						className='mr-3'
-						onClick={handleChecboxClick}
+						onChange={handleChecboxChange}
 						checked={completed}>
 					</input>
 					{title}
