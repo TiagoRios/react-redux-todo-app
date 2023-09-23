@@ -1,5 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getTodosAsync, addTodoAsync, toggleCompleteAsync } from "./todoAsync";
+import {
+    addTodoAsync,
+    getTodosAsync,
+    deleteTodoAsync,
+    toggleCompleteAsync, 
+} from "./todoAsync";
 
 export const todoSlice = createSlice({
     name: 'todos',
@@ -46,10 +51,14 @@ export const todoSlice = createSlice({
             const index = state.findIndex((todo) => todo.id === action.payload.todo.id);
             state[index].completed = action.payload.todo.completed;
         },
+
+        [deleteTodoAsync.fulfilled]: (state, action) => {
+            return state.filter(todo => todo.id !== action.payload.id)
+        },
     },
 });
 
-export { getTodosAsync, addTodoAsync, toggleCompleteAsync }
+export { getTodosAsync, addTodoAsync, toggleCompleteAsync, deleteTodoAsync }
 
 // createSlice cria a ações com base nos nomes do redutor.
 export const { addTodo, toggleComplete, deleteTodo, } = todoSlice.actions;

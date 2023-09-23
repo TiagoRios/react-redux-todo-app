@@ -60,6 +60,22 @@ export const myThunkToggleCompleteAsync = async (outroPayload) => {
     }
 }
 
+export const myThunkDeleteAsync = async (algumPayload) => {
+    try {
+        const res = await fetch(BASE_URL + `/${algumPayload.id}`,
+            {
+                method: "DELETE",
+            })
+
+        if (res.ok) {
+            return { id: algumPayload.id }
+        }
+
+    } catch (error) {
+        showErrorMsg(error.message)
+    }
+}
+
 const showErrorMsg = (message) => {
     console.error(`\n\nERROR: ${message}\n\n`);
 }

@@ -1,5 +1,10 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { myThunkGetTodos, myThunkAddTodo, myThunkToggleCompleteAsync } from "./todoThunkForTodoAsync";
+import {
+    myThunkAddTodo,
+    myThunkGetTodos,
+    myThunkDeleteAsync,
+    myThunkToggleCompleteAsync,
+} from "./todoThunkForTodoAsync";
 
 // Usado em extraReducers do createSlice
 export const getTodosAsync = createAsyncThunk(
@@ -15,4 +20,9 @@ export const addTodoAsync = createAsyncThunk(
 export const toggleCompleteAsync = createAsyncThunk(
     'todos/toggleCompleteAsync',
     myThunkToggleCompleteAsync
+)
+
+export const deleteTodoAsync = createAsyncThunk(
+    'todos/deleteAsync',
+    myThunkDeleteAsync
 )
