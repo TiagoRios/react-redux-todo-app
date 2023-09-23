@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { toggleComplete } from '../redux/todoSlice';
+import { toggleComplete, deleteTodo } from '../redux/todoSlice';
 
 const TodoItem = ({ id, title, completed }) => {
 	const dispatch = useDispatch();
@@ -8,6 +8,11 @@ const TodoItem = ({ id, title, completed }) => {
 	const handleChecboxClick = () => {
 		// id e completed são passadas pelo payload.
 		dispatch(toggleComplete({ id, completed: !completed }))
+	}
+
+	const handleDeleteClick = () => {
+		// somente id é passado pelo payload.
+		dispatch(deleteTodo({ id }))
 	}
 
 	return (
@@ -22,7 +27,12 @@ const TodoItem = ({ id, title, completed }) => {
 					</input>
 					{title}
 				</span>
-				<button className='btn btn-danger'>Delete</button>
+				<button
+					className='btn btn-danger'
+					onClick={handleDeleteClick}
+				>
+					Delete
+				</button>
 			</div>
 		</li>
 	);
