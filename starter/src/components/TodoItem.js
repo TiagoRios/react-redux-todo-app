@@ -20,6 +20,7 @@ const TodoItem = ({ id, title, completed }) => {
 			<div className='d-flex justify-content-between'>
 				<span className='d-flex align-items-center'>
 					<input
+						style={{ marginRight: '5px' }}
 						type='checkbox'
 						className='mr-3'
 						onChange={handleChecboxChange}

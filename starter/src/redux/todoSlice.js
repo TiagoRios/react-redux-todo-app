@@ -10,11 +10,11 @@ export const todoSlice = createSlice({
     name: 'todos',
 
     initialState: [
-        { id: 1, title: 'dormir antes das 22h', completed: true },
-        { id: 2, title: 'alimentar cão', completed: false },
-        { id: 3, title: 'passear cão', completed: false },
-        { id: 4, title: 'estudar', completed: false },
-        { id: 5, title: 'fazer desafio de código', completed: false },
+        // { id: 1, title: 'dormir antes das 22h', completed: true },
+        // { id: 2, title: 'alimentar cão', completed: false },
+        // { id: 3, title: 'passear cão', completed: false },
+        // { id: 4, title: 'estudar', completed: false },
+        // { id: 5, title: 'fazer desafio de código', completed: false },
     ],
 
     reducers: {

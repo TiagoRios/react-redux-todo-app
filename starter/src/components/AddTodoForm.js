@@ -15,6 +15,8 @@ const AddTodoForm = () => {
 			// title vai ficar no payload da ação.
 			dispatch(addTodoAsync({ title: value }))
 		}
+
+		setValue('')
 	};
 
 	return (
