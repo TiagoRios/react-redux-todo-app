@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 // redux
 import { useDispatch } from 'react-redux';
-import { addTodo } from '../redux/todoSlice';
+import { addTodoAsync } from '../redux/todoSlice';
 
 const AddTodoForm = () => {
 	const [value, setValue] = useState('');
@@ -13,7 +13,7 @@ const AddTodoForm = () => {
 
 		if (value) {
 			// title vai ficar no payload da ação.
-			dispatch(addTodo({ title: value }))
+			dispatch(addTodoAsync({ title: value }))
 		}
 	};
 

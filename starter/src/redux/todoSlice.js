@@ -6,12 +6,37 @@ const myThunkGetTodos = async () => {
 
     try {
         const res = await fetch(URL, { method: "GET" })
+
         if (res.ok) {
             const todos = await res.json();
             return { todos } // Objeto contendo os "TODOS"
         }
+
     } catch (error) {
-        console.error(`fetch ERROR: ${error.message}`);
+        console.error(`\n\nERROR: ${error.message}\n\n`);
+    }
+}
+
+const myThunkAddTodo = async (myPayload) => {
+    const URL = 'http://localhost:7000/todos';
+
+    try {
+        const res = await fetch(URL,
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ title: myPayload.title })
+            })
+
+        if (res.ok) {
+            const todo = await res.json();
+            return { todo } // Objeto contendo apenas um "TODO"
+        }
+
+    } catch (error) {
+        console.error(`\n\nERROR: ${error.message}\n\n`);
     }
 }
 
@@ -21,14 +46,19 @@ export const getTodosAsync = createAsyncThunk(
     myThunkGetTodos
 )
 
+export const addTodoAsync = createAsyncThunk(
+    'todos/addTodoAsync',
+    myThunkAddTodo
+)
+
 export const todoSlice = createSlice({
     name: 'todos',
 
     initialState: [
-        { id: 1, title: 'dormir antes das 22h', completed: false },
-        { id: 2, title: 'alimentar cão', completed: true },
-        { id: 3, title: 'passear cão', completed: true },
-        { id: 4, title: 'estudar', completed: true },
+        { id: 1, title: 'dormir antes das 22h', completed: true },
+        { id: 2, title: 'alimentar cão', completed: false },
+        { id: 3, title: 'passear cão', completed: false },
+        { id: 4, title: 'estudar', completed: false },
         { id: 5, title: 'fazer desafio de código', completed: false },
     ],
 
@@ -54,6 +84,10 @@ export const todoSlice = createSlice({
     extraReducers: {
         [getTodosAsync.fulfilled]: (state, action) => {
             return action.payload.todos;
+        },
+
+        [addTodoAsync.fulfilled]: (state, action) => {
+            state.push(action.payload.todo)
         },
     },
 });
