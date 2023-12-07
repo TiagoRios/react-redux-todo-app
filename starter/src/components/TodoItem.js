@@ -1,8 +1,9 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
+
 import { toggleCompleteAsync, deleteTodoAsync } from '../redux/todoSlice';
 
-const TodoItem = ({ id, title, completed }) => {
+const TodoItem = ({ completed, id, title }) => {
 	const dispatch = useDispatch();
 
 	const handleChecboxChange = () => {
@@ -20,18 +21,17 @@ const TodoItem = ({ id, title, completed }) => {
 			<div className='d-flex justify-content-between'>
 				<span className='d-flex align-items-center'>
 					<input
-						style={{ marginRight: '5px' }}
-						type='checkbox'
+						checked={completed}
 						className='mr-3'
 						onChange={handleChecboxChange}
-						checked={completed}>
-					</input>
+						style={{ marginRight: '5px' }}
+						type='checkbox'
+					/>
+
 					{title}
 				</span>
-				<button
-					className='btn btn-danger'
-					onClick={handleDeleteClick}
-				>
+
+				<button className='btn btn-danger' onClick={handleDeleteClick}>
 					Delete
 				</button>
 			</div>

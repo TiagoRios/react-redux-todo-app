@@ -1,21 +1,27 @@
 import React, { useEffect } from 'react';
-import TodoItem from './TodoItem';
 import { useSelector, useDispatch } from 'react-redux';
+
 import { getTodosAsync } from '../redux/todoSlice';
+import TodoItem from './TodoItem';
 
 const TodoList = () => {
 	const dispatch = useDispatch();
-	const todos = useSelector((state) => state.todos); // nome definido dentro da store
+	const todos = useSelector((state) => state.todos); // `todos` nome do redutor definido dentro da store.
 
 	// Chamada para thunk API.
-	useEffect(() => { 
+	useEffect(() => {
 		dispatch(getTodosAsync());
 	}, [dispatch])
 
 	return (
 		<ul className='list-group'>
-			{todos.map((todo, index) => (
-				<TodoItem key={index} id={todo.id} title={todo.title} completed={todo.completed} />
+			{todos.map(todo => (
+				<TodoItem
+					completed={todo.completed}
+					id={todo.id}
+					key={todo.id}
+					title={todo.title}
+				/>
 			))}
 		</ul>
 	);

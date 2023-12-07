@@ -1,9 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
     addTodoAsync,
-    getTodosAsync,
     deleteTodoAsync,
-    toggleCompleteAsync, 
+    getTodosAsync,
+    toggleCompleteAsync,
 } from "./todoAsync";
 
 export const todoSlice = createSlice({
@@ -20,47 +20,51 @@ export const todoSlice = createSlice({
     reducers: {
         addTodo: (state, action) => {
             const todo = {
-                id: new Date(),
-                title: action.payload.title,
-                completed: false,
+                title: action.payload.title
             };
+
             state.push(todo)
+        },
+
+        deleteTodo: (state, action) => {
+            return state.filter(todo => todo.id !== action.payload.id)
         },
 
         toggleComplete: (state, action) => {
             const index = state.findIndex((todo) => todo.id === action.payload.id);
             state[index].completed = action.payload.completed;
-        },
-
-        deleteTodo: (state, action) => {
-            return state.filter(todo => todo.id !== action.payload.id)
         }
         // outrosReducers
     },
 
     extraReducers: {
-        [getTodosAsync.fulfilled]: (state, action) => {
-            return action.payload.todos;
-        },
-
         [addTodoAsync.fulfilled]: (state, action) => {
             state.push(action.payload.todo);
+        },
+
+        [deleteTodoAsync.fulfilled]: (state, action) => {
+            return state.filter(todo => todo.id !== action.payload.id)
+        },
+
+        [getTodosAsync.fulfilled]: (state, action) => {
+            return action.payload.todos;
         },
 
         [toggleCompleteAsync.fulfilled]: (state, action) => {
             const index = state.findIndex((todo) => todo.id === action.payload.todo.id);
             state[index].completed = action.payload.todo.completed;
         },
-
-        [deleteTodoAsync.fulfilled]: (state, action) => {
-            return state.filter(todo => todo.id !== action.payload.id)
-        },
     },
 });
 
-export { getTodosAsync, addTodoAsync, toggleCompleteAsync, deleteTodoAsync }
-
 // createSlice cria a ações com base nos nomes do redutor.
-export const { addTodo, toggleComplete, deleteTodo, } = todoSlice.actions;
+export const { addTodo, deleteTodo, toggleComplete } = todoSlice.actions;
 
-export default todoSlice.reducer;
+export {
+    addTodoAsync,
+    deleteTodoAsync,
+    getTodosAsync,
+    toggleCompleteAsync,
+}
+
+export default todoSlice.reducer; // Usado na store
